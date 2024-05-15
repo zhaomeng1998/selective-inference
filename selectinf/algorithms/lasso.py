@@ -17,6 +17,7 @@ import numpy as np
 import pandas as pd
 from scipy.stats import norm as ndist, t as tdist
 from scipy.linalg import block_diag
+from sklearn.linear_model import LinearRegression
 
 from regreg.api import (glm,
                         weighted_l1norm,
@@ -42,6 +43,7 @@ from ..truncated.gaussian import truncated_gaussian_old as TG
 from ..glm import pairs_bootstrap_glm
 
 
+
 class lasso(object):
     r"""
     A class for the LASSO for post-selection inference.
@@ -55,6 +57,7 @@ class lasso(object):
     def __init__(self,
                  loglike,
                  feature_weights,
+                 ols_solution,
                  covariance_estimator=None,
                  ignore_inactive_constraints=False):
         r"""
@@ -127,8 +130,8 @@ class lasso(object):
         lasso_solution = self.lasso_solution  # shorthand after setting it correctly above
 
         if not np.all(lasso_solution == 0):
-            ols_problem = simple_problem(self.loglike, weighted_l1norm(self.feature_weights*0, lagrange=1.)) # new 
-            self.ols_solution = ols_problem.solve(**solve_args) # new 
+            # ols_problem = simple_problem(self.loglike, weighted_l1norm(self.feature_weights*0, lagrange=1.)) # new 
+            # self.ols_solution = ols_problem.solve(**solve_args) # new 
             # print(self.ols_solution) # new 
             self.active = np.nonzero(lasso_solution != 0)[0]
             self.inactive = lasso_solution == 0
@@ -145,6 +148,7 @@ class lasso(object):
             dbeta_A = H_AAinv.dot(G_A)
             
             # self.onestep_estimator = self._active_soln - dbeta_A # new
+            # self.onestep_estimator = self.ols_solution[self.active] # new
             self.onestep_estimator = self.ols_solution[self.active] # new
             self.active_penalized = self.feature_weights[self.active] != 0
 
@@ -422,7 +426,8 @@ class lasso(object):
         if covariance_estimator is not None:
             sigma = 1.
         loglike = glm.gaussian(X, Y, coef=1. / sigma ** 2, quadratic=quadratic)
-        return klass(loglike, np.asarray(feature_weights) / sigma ** 2,
+        ols_solution = LinearRegression().fit(X,y).coef_
+        return klass(loglike, np.asarray(feature_weights) / sigma ** 2,ols_solution,
                      covariance_estimator=covariance_estimator)
 
     @classmethod
