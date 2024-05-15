@@ -87,7 +87,7 @@ class lasso(object):
         if np.asarray(feature_weights).shape == ():
             feature_weights = np.ones(loglike.shape) * feature_weights
         self.feature_weights = np.asarray(feature_weights)
-
+        self.ols_solution = ols_solution
         self.covariance_estimator = covariance_estimator
         self.ignore_inactive_constraints = ignore_inactive_constraints
 
