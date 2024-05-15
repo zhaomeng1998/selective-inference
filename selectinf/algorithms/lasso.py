@@ -127,7 +127,9 @@ class lasso(object):
         lasso_solution = self.lasso_solution  # shorthand after setting it correctly above
 
         if not np.all(lasso_solution == 0):
-
+            ols_problem = simple_problem(self.loglike, weighted_l1norm(self.feature_weights*0, lagrange=1.)) # new 
+            self.ols_solution = ols_problem.solve(**solve_args) # new 
+            # print(self.ols_solution) # new 
             self.active = np.nonzero(lasso_solution != 0)[0]
             self.inactive = lasso_solution == 0
             self.active_signs = np.sign(lasso_solution[self.active])
@@ -141,8 +143,9 @@ class lasso(object):
             G_A = G[self.active]
             G_I = self._G_I = G[self.inactive]
             dbeta_A = H_AAinv.dot(G_A)
+            
             # self.onestep_estimator = self._active_soln - dbeta_A
-            self.onestep_estimator = self._active_soln
+            self.onestep_estimator = self.ols_solution[self.active]
             self.active_penalized = self.feature_weights[self.active] != 0
 
             if self.active_penalized.sum():
