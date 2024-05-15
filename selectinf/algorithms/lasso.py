@@ -426,7 +426,7 @@ class lasso(object):
         if covariance_estimator is not None:
             sigma = 1.
         loglike = glm.gaussian(X, Y, coef=1. / sigma ** 2, quadratic=quadratic)
-        ols_solution = LinearRegression().fit(X,y).coef_
+        ols_solution = LinearRegression().fit(X,Y).coef_
         return klass(loglike, np.asarray(feature_weights) / sigma ** 2,ols_solution,
                      covariance_estimator=covariance_estimator)
 
