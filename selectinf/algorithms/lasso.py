@@ -141,7 +141,8 @@ class lasso(object):
             G_A = G[self.active]
             G_I = self._G_I = G[self.inactive]
             dbeta_A = H_AAinv.dot(G_A)
-            self.onestep_estimator = self._active_soln - dbeta_A
+            # self.onestep_estimator = self._active_soln - dbeta_A
+            self.onestep_estimator = self._active_soln
             self.active_penalized = self.feature_weights[self.active] != 0
 
             if self.active_penalized.sum():
