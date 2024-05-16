@@ -87,7 +87,6 @@ class lasso(object):
         if np.asarray(feature_weights).shape == ():
             feature_weights = np.ones(loglike.shape) * feature_weights
         self.feature_weights = np.asarray(feature_weights)
-        self.ols_solution = ols_solution
         self.covariance_estimator = covariance_estimator
         self.ignore_inactive_constraints = ignore_inactive_constraints
 
@@ -147,7 +146,7 @@ class lasso(object):
             G_I = self._G_I = G[self.inactive]
             dbeta_A = H_AAinv.dot(G_A)
             
-            self.onestep_estimator = self._active_soln - dbeta_A # new
+            self.onestep_estimator = self._active_soln - dbeta_A 
             # self.onestep_estimator = self.ols_solution[self.active] # new
             # self.onestep_estimator = self.ols_solution[self.active] # new
             self.active_penalized = self.feature_weights[self.active] != 0
@@ -433,8 +432,7 @@ class lasso(object):
         if covariance_estimator is not None:
             sigma = 1.
         loglike = glm.gaussian(X, Y, coef=1. / sigma ** 2, quadratic=quadratic)
-        ols_solution = LinearRegression(fit_intercept=False).fit(X,Y).coef_
-        return klass(loglike, np.asarray(feature_weights) / sigma ** 2,ols_solution,
+        return klass(loglike, np.asarray(feature_weights) / sigma ** 2,
                      covariance_estimator=covariance_estimator)
 
     @classmethod
