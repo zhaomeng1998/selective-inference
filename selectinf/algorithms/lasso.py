@@ -355,7 +355,8 @@ class lasso(object):
                                                              'lower_trunc',
                                                              'upper_trunc',
                                                              'sd'],
-        # new                                                 np.array(result).T)]))
+                                                             np.array(result).T)]))
+        # new
         if len(df) > 0:
           df['variable'] = df['variable'].astype(int)
         return df
@@ -2043,7 +2044,7 @@ class ROSI(lasso):
                                                                  'upper_confidence',
                                                                  'lower_truncation',
                                                                  'upper_truncation'],
-                                                                np.array(result).T)]))
+                                                                 np.array(result).T)]))
             df['variable'] = df['variable'].astype(int)
             return df
 
