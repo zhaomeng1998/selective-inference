@@ -1,5 +1,5 @@
 from .lasso import (lasso, 
-                    lasso_ols
+                    lasso_ols,
                     ROSI,
                     data_carving as data_carving_lasso, 
                     additive_noise as additive_noise_lasso)
