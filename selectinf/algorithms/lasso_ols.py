@@ -44,7 +44,7 @@ from ..glm import pairs_bootstrap_glm
 
 
 
-class lasso(object):
+class lasso_new(object):
     r"""
     A class for the LASSO for post-selection inference.
     The problem solved is
