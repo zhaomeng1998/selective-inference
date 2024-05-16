@@ -241,6 +241,7 @@ class lasso(object):
                 self._inactive_constraints = None
         else:
             self.active = []
+            self.active_signs = []
             self.inactive = np.arange(lasso_solution.shape[0])
             self._constraints = None
             self._inactive_constraints = None
@@ -290,9 +291,9 @@ class lasso(object):
         if dispersion is None:
             dispersion = 1.
 
-        # new
-        if not self.active: 
-          return "no rejection"
+        # # new
+        # if not self.active: 
+        #   return "no rejection"
             
         result = []
         C = self.constraints
