@@ -355,8 +355,9 @@ class lasso(object):
                                                              'lower_trunc',
                                                              'upper_trunc',
                                                              'sd'],
-                                                            np.array(result).T)]))
-        df['variable'] = df['variable'].astype(int)
+        # new                                                 np.array(result).T)]))
+        if len(df) > 0:
+          df['variable'] = df['variable'].astype(int)
         return df
 
     @property
