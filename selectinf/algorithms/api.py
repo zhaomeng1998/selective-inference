@@ -1,8 +1,9 @@
 from .lasso import (lasso, 
-                    lasso_ols,
                     ROSI,
                     data_carving as data_carving_lasso, 
                     additive_noise as additive_noise_lasso)
+
+from .lasso_ols import lasso as lasso_new
 
 from .sqrt_lasso import (choose_lambda as choose_lambda_sqrt_lasso, 
                          solve_sqrt_lasso)
