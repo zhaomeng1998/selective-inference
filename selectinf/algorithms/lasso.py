@@ -289,6 +289,10 @@ class lasso(object):
 
         if dispersion is None:
             dispersion = 1.
+
+        # new
+        if not self.active: 
+          return "no rejection"
             
         result = []
         C = self.constraints
