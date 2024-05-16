@@ -57,7 +57,6 @@ class lasso(object):
     def __init__(self,
                  loglike,
                  feature_weights,
-                 ols_solution,
                  covariance_estimator=None,
                  ignore_inactive_constraints=False):
         r"""
